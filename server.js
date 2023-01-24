@@ -6,6 +6,12 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+require("dotenv").config();
+
+const connectDB = require("./dbinit");
+
+connectDB();
+
 const PORT = process.env.PORT || 8080;
 
 app.get("/", (req, res) => {
