@@ -9,6 +9,10 @@ const {
   deleteMessage,
 } = require("../controllers/messageControllers");
 
+const requireAuth = require("../middlewares/requireAuth");
+
+app.use(requireAuth);
+
 app.route("/").get(getAllMessages).post(createMessage);
 
 app.route("/:id").get(getOneMessage).put(updateMessage).delete(deleteMessage);
