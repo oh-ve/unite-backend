@@ -2,11 +2,12 @@ const Salary = require("../schemas/Salary");
 
 const getAllSalaries = async (req, res) => {
   try {
-    const salaries = await Salary.find();
+    const user_id = req.user._id;
+    const salaries = await Salary.find({ user_id });
     if (!salaries.length) {
       return res.status(404).json({ message: "Enter salary" });
     }
-    res.status(200).json(salaries);
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -37,6 +38,7 @@ const createSalary = async (req, res) => {
   }
 
   try {
+    const user_id = req.user._id;
     const post = await Salary.create({
       salary,
       position,
