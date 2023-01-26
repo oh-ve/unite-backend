@@ -2,7 +2,8 @@ const Message = require("../schemas/Message");
 
 const getAllMessages = async (req, res) => {
   try {
-    const message = await Message.find();
+    const user_id = req.user._id;
+    const message = await Message.find({ user_id });
     res.status(200).json({
       message,
     });
@@ -31,7 +32,7 @@ const createMessage = async (req, res) => {
   try {
     const { text, date } = req.body;
     console.log("req.body:", req.body);
-    const message = await Message.create({ text, date });
+    const message = await Message.create({ text, date, user_id });
     res.status(201).json({
       success: true,
       message,

@@ -7,21 +7,15 @@ const createToken = (_id) => {
 
 // login user
 const loginUser = async (req, res) => {
-  const { firstName, lastName, email, password, isAdmin } = req.body;
+  const { email, password, isAdmin } = req.body;
 
   try {
-    const user = await User.login(
-      firstName,
-      lastName,
-      email,
-      password,
-      isAdmin
-    );
+    const user = await User.login(email, password);
 
     //create token
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ firstName, lastName, email, token, isAdmin });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -29,16 +23,31 @@ const loginUser = async (req, res) => {
 
 // sign up user
 const signUpUser = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password, isAdmin } = req.body;
 
   try {
-    const user = await User.signup(firstName, lastName, email, password);
+    const user = await User.signup(
+      firstName,
+      lastName,
+      email,
+      password,
+      isAdmin
+    );
     //create token
     const token = createToken(user._id);
-    res.status(200).json({ firstName, lastName, email, token });
+    res.status(200).json({ firstName, lastName, email, token, isAdmin });
   } catch (error) {
-    res.status(400).json({ error: error.message, isItMe: "or is it youu" });
+    res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = { loginUser, signUpUser };
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { loginUser, signUpUser, getAllUsers };

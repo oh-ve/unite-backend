@@ -22,13 +22,19 @@ const userSchema = new mongoose.Schema({
   },
   isAdmin: {
     type: Boolean,
-    required: true,
+    default: false,
   },
 });
 
 // creating a custom static method
 
-userSchema.statics.signup = async function (email, password) {
+userSchema.statics.signup = async function (
+  firstName,
+  lastName,
+  email,
+  password,
+  isAdmin
+) {
   //validation
 
   const exists = await this.findOne({ email });
@@ -37,12 +43,12 @@ userSchema.statics.signup = async function (email, password) {
     throw Error("Email already in use");
   }
 
-  if (!email || !password) {
+  if (!email || !password || !firstName || !lastName) {
     throw Error("All fields must be filled");
   }
 
   if (!validator.isEmail(email)) {
-    throw Error("email is not validddddddd");
+    throw Error("email is not valid");
   }
 
   if (!validator.isStrongPassword(password)) {
@@ -55,14 +61,20 @@ userSchema.statics.signup = async function (email, password) {
 
   const hash = await bcrypt.hash(password, salt);
 
-  const user = await this.create({ email, password: hash });
+  const user = await this.create({
+    email,
+    password: hash,
+    firstName,
+    lastName,
+    isAdmin,
+  });
 
   return user;
 };
 
 // static custom login method
 
-userSchema.statics.login = async function (email, password) {
+userSchema.statics.login = async function (email, password, isAdmin) {
   if (!email || !password) {
     throw Error("All fields must be filled");
   }
