@@ -10,10 +10,6 @@ const messageSchema = new mongoose.Schema({
     default: Date.now,
     required: true,
   },
-  user_id: {
-    type: String,
-    required: true,
-  },
 });
 
 module.exports = mongoose.model("Message", messageSchema);
