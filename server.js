@@ -38,5 +38,6 @@ const salaryRoutes = require("./routes/salaryRoutes");
 
 app.use("/salary", salaryRoutes);
 
-const message = require("./routes/messageRoutes");
-app.use("/message", message);
+const messageRoutes = require("./routes/messageRoutes");
+
+app.use("/message", messageRoutes);
