@@ -30,21 +30,39 @@ const createSalary = async (req, res) => {
     emptyFields.push("yearsOfEmployment");
   }
   if (emptyFields.length > 0) {
-    return res.status(400).json({ error: "Please fill all fields" });
+    return res.status(400).json({ error: "Please fill all fieldsss" });
   }
 
   try {
-    const salary = await Salary.create({
+    const newSalary = await Salary.create({
       salary,
       position,
       age,
       gender,
       yearsOfEmployment,
     });
-    res.status(201).json(salary);
+    res.status(201).json(newSalary);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-module.exports = { getAllSalaries, createSalary };
+const queriedSalaries = async (req, res) => {
+  const { age, gender, yearsOfEmployment } = req.body;
+
+  try {
+    const salaries = await Salary.find().where({
+      age: { $gte: age - 5, $lte: age + 5 },
+      gender: gender,
+      yearsOfEmployment: {
+        $gte: yearsOfEmployment - 5,
+        $lte: yearsOfEmployment + 5,
+      },
+    });
+    res.status(200).json(salaries);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { getAllSalaries, createSalary, queriedSalaries };

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const salarySchema = new mongoose.Schema({
   salary: {
-    type: Number,
+    type: String,
     required: true,
   },
   position: {
@@ -10,7 +10,7 @@ const salarySchema = new mongoose.Schema({
     required: true,
   },
   age: {
-    type: Number,
+    type: String,
     required: true,
   },
   gender: {
@@ -21,10 +21,10 @@ const salarySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  user_id: {
-    type: String,
-    required: true,
-  },
+  // user_id: {
+  //   type: String,
+  //   required: true,
+  // },
 });
 
 module.exports = mongoose.model("Salary", salarySchema);
