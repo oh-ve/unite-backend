@@ -74,7 +74,7 @@ userSchema.statics.signup = async function (
 
 // static custom login method
 
-userSchema.statics.login = async function (email, password, isAdmin) {
+userSchema.statics.login = async function (email, password) {
   if (!email || !password) {
     throw Error("All fields must be filled");
   }
@@ -94,4 +94,4 @@ userSchema.statics.login = async function (email, password, isAdmin) {
   return user;
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema, "users");
