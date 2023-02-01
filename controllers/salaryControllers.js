@@ -65,4 +65,23 @@ const queriedSalaries = async (req, res) => {
   }
 };
 
-module.exports = { getAllSalaries, createSalary, queriedSalaries };
+const deleteAllSalaries = async (req, res) => {
+  try {
+    const deletedSalaries = await Salary.deleteMany({});
+    if (deletedSalaries.deletedCount === 0) {
+      return res.status(404).json({ error: "No salaries found to delete." });
+    }
+    res
+      .status(200)
+      .json({ message: `Deleted ${deletedSalaries.deletedCount} salaries.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  getAllSalaries,
+  createSalary,
+  queriedSalaries,
+  deleteAllSalaries,
+};
