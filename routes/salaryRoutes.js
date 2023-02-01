@@ -13,6 +13,6 @@ const requireAuth = require("../middlewares/requireAuth");
 app.use(requireAuth);
 
 app.route("/").get(getAllSalaries).post(createSalary);
-app.route("/calculate").get(queriedSalaries);
+app.route("/calculate/:age/:gender/:yearsOfEmployment").get(queriedSalaries);
 
 module.exports = app;

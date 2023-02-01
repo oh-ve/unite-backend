@@ -10,6 +10,10 @@ const messageSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    user_id: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

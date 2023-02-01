@@ -1,5 +1,15 @@
 const Message = require("../schemas/Message");
 
+const getAllMessagesFromUser = async (req, res) => {
+  try {
+    const user_id = req.user._id;
+    const messages = await Message.find({ user_id }).populate("user");
+    res.status(200).json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getAllMessages = async (req, res) => {
   try {
     const messages = await Message.find().populate("user");
@@ -24,9 +34,9 @@ const getOneMessage = async (req, res) => {
 
 const createMessage = async (req, res) => {
   try {
-    const { text, user } = req.body;
+    const { text, user, user_id } = req.body;
     console.log("req.body:", req.body);
-    const message = await Message.create({ text, user });
+    const message = await Message.create({ text, user, user_id });
     res.status(201).json({
       success: true,
       message,
@@ -67,10 +77,24 @@ const deleteMessage = async (req, res) => {
   }
 };
 
+// const queriedMessages = async (req, res) => {
+//   const { _id } = req.body;
+
+//   try {
+//     const messages = await Message.find().where({
+//       _id: _id,
+//     });
+//     res.status(200).json(salaries);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 module.exports = {
   getAllMessages,
   getOneMessage,
   createMessage,
   updateMessage,
   deleteMessage,
+  getAllMessagesFromUser,
 };

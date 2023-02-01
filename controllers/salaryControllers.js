@@ -48,7 +48,7 @@ const createSalary = async (req, res) => {
 };
 
 const queriedSalaries = async (req, res) => {
-  const { age, gender, yearsOfEmployment } = req.body;
+  const { age, gender, yearsOfEmployment } = req.params;
 
   try {
     const salaries = await Salary.find().where({
