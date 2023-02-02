@@ -16,7 +16,11 @@ app.use(requireAuth);
 
 app.route("/").get(getAllMessagesFromUser).post(createMessage);
 
-app.route("/:id").get(getOneMessage).put(updateMessage).delete(deleteMessage);
+app
+  .route("/user/:id")
+  .get(getOneMessage)
+  .put(updateMessage)
+  .delete(deleteMessage);
 
 app.route("/admin").get(getAllMessages);
 
