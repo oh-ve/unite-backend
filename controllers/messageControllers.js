@@ -13,7 +13,7 @@ const getAllMessagesFromUser = async (req, res) => {
 const getAllMessages = async (req, res) => {
   try {
     const messages = await Message.find().populate("user");
-    res.status(200).json(messages);
+    res.status(200).json({ messages });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
