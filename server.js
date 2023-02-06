@@ -45,3 +45,7 @@ app.use("/message", messageRoutes);
 const boardRoutes = require("./routes/boardRoutes");
 
 app.use("/board", boardRoutes);
+
+const eventRoutes = require("./routes/eventRoutes");
+
+app.use("/events", eventRoutes);
