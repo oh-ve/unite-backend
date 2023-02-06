@@ -41,3 +41,7 @@ app.use("/salary", salaryRoutes);
 const messageRoutes = require("./routes/messageRoutes");
 
 app.use("/message", messageRoutes);
+
+const boardRoutes = require("./routes/boardRoutes");
+
+app.use("/board", boardRoutes);
