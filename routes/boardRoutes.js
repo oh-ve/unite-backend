@@ -2,7 +2,6 @@ const express = require("express");
 const app = express.Router();
 
 const {
-  getAllPost,
   getOnePost,
   createPost,
   updatePost,
