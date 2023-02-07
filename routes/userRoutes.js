@@ -1,5 +1,4 @@
 const express = require("express");
-const { getAllMessages } = require("../controllers/messageControllers");
 
 const {
   loginUser,
