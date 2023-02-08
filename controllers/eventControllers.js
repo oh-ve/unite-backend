@@ -66,10 +66,25 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const deleteAllEvents = async (req, res) => {
+  try {
+    const deletedEvents = await Event.deleteMany({});
+    if (deletedEvents.deletedCount === 0) {
+      return res.status(404).json({ error: "No events found to delete." });
+    }
+    res
+      .status(200)
+      .json({ message: `Deleted ${deletedEvents.deletedCount} events.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllEvents,
   getOneEvent,
   createEvent,
   updateEvent,
   deleteEvent,
+  deleteAllEvents,
 };

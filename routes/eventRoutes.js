@@ -7,13 +7,14 @@ const {
   createEvent,
   updateEvent,
   deleteEvent,
+  deleteAllEvents,
 } = require("../controllers/eventControllers");
 
 const requireAuth = require("../middlewares/requireAuth");
 
 app.use(requireAuth);
 
-app.route("/").get(getAllEvents).post(createEvent);
+app.route("/").get(getAllEvents).post(createEvent).delete(deleteAllEvents);
 
 app.route("/:id").get(getOneEvent).put(updateEvent).delete(deleteEvent);
 

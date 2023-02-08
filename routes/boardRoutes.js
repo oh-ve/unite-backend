@@ -10,13 +10,14 @@ const {
   getAllPosts,
   getAllReplies,
   getAllPostsFromUser,
+  deleteAllPosts,
 } = require("../controllers/boardControllers");
 
 const requireAuth = require("../middlewares/requireAuth");
 
 app.use(requireAuth);
 
-app.route("/").get(getAllPosts).post(createPost);
+app.route("/").get(getAllPosts).post(createPost).delete(deleteAllPosts);
 
 app.route("/user/:user_id").get(getAllPostsFromUser);
 

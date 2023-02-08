@@ -77,6 +77,20 @@ const deleteMessage = async (req, res) => {
   }
 };
 
+const deleteAllMessages = async (req, res) => {
+  try {
+    const deletedMessages = await Message.deleteMany({});
+    if (deletedMessages.deletedCount === 0) {
+      return res.status(404).json({ error: "No messages found to delete." });
+    }
+    res
+      .status(200)
+      .json({ message: `Deleted ${deletedMessages.deletedCount} messages.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // const queriedMessages = async (req, res) => {
 //   const { _id } = req.body;
 
@@ -97,4 +111,5 @@ module.exports = {
   updateMessage,
   deleteMessage,
   getAllMessagesFromUser,
+  deleteAllMessages,
 };
