@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  company: {
+    type: String,
+    required: true,
+  },
   isAdmin: {
     type: Boolean,
     default: false,
@@ -33,6 +37,7 @@ userSchema.statics.signup = async function (
   lastName,
   email,
   password,
+  company,
   isAdmin
 ) {
   //validation
@@ -66,6 +71,7 @@ userSchema.statics.signup = async function (
     password: hash,
     firstName,
     lastName,
+    company,
     isAdmin,
   });
 

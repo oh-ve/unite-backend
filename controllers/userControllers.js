@@ -1,8 +1,8 @@
 const User = require("../schemas/User");
 const jwt = require("jsonwebtoken");
 
-const createToken = (_id, firstName, lastName) => {
-  return jwt.sign({ _id, firstName, lastName }, process.env.SECRET, {
+const createToken = (_id, firstName, lastName, company) => {
+  return jwt.sign({ _id, firstName, lastName, company }, process.env.SECRET, {
     expiresIn: "1d",
   });
 };
@@ -15,7 +15,12 @@ const loginUser = async (req, res) => {
     const user = await User.login(email, password);
 
     //create token
-    const token = createToken(user._id, user.firstName, user.lastName);
+    const token = createToken(
+      user._id,
+      user.firstName,
+      user.lastName,
+      user.company
+    );
 
     res.status(200).json({ email, token, isAdmin: user.isAdmin });
   } catch (error) {
@@ -25,7 +30,7 @@ const loginUser = async (req, res) => {
 
 // sign up user
 const signUpUser = async (req, res) => {
-  const { firstName, lastName, email, password, isAdmin } = req.body;
+  const { firstName, lastName, email, password, company, isAdmin } = req.body;
 
   try {
     const user = await User.signup(
@@ -33,11 +38,19 @@ const signUpUser = async (req, res) => {
       lastName,
       email,
       password,
+      company,
       isAdmin
     );
     //create token
-    const token = createToken(user._id, user.firstName, user.lastName);
-    res.status(200).json({ firstName, lastName, email, token, isAdmin });
+    const token = createToken(
+      user._id,
+      user.firstName,
+      user.lastName,
+      user.company
+    );
+    res
+      .status(200)
+      .json({ firstName, lastName, email, token, company, isAdmin });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
