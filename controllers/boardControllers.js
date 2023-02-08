@@ -58,6 +58,20 @@ const getAllPostsFromUser = async (req, res) => {
   }
 };
 
+const deleteAllPosts = async (req, res) => {
+  try {
+    const deletedPosts = await Board.deleteMany({});
+    if (deletedPosts.deletedCount === 0) {
+      return res.status(404).json({ error: "No posts found to delete." });
+    }
+    res
+      .status(200)
+      .json({ message: `Deleted ${deletedPosts.deletedCount} posts.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const createReply = async (req, res) => {
   try {
     const board = await Board.findById(req.params.id);
@@ -87,4 +101,5 @@ module.exports = {
   createReply,
   getAllReplies,
   getAllPostsFromUser,
+  deleteAllPosts,
 };

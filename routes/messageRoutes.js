@@ -8,13 +8,18 @@ const {
   updateMessage,
   deleteMessage,
   getAllMessagesFromUser,
+  deleteAllMessages,
 } = require("../controllers/messageControllers");
 
 const requireAuth = require("../middlewares/requireAuth");
 
 app.use(requireAuth);
 
-app.route("/").get(getAllMessagesFromUser).post(createMessage);
+app
+  .route("/")
+  .get(getAllMessagesFromUser)
+  .post(createMessage)
+  .delete(deleteAllMessages);
 
 app
   .route("/user/:id")

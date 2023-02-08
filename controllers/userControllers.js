@@ -79,4 +79,24 @@ const getOneUser = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, signUpUser, getAllUsers, getOneUser };
+const deleteAllUsers = async (req, res) => {
+  try {
+    const deletedUsers = await User.deleteMany({});
+    if (deletedUsers.deletedCount === 0) {
+      return res.status(404).json({ error: "No users found to delete." });
+    }
+    res
+      .status(200)
+      .json({ message: `Deleted ${deletedUsers.deletedCount} users.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  loginUser,
+  signUpUser,
+  getAllUsers,
+  getOneUser,
+  deleteAllUsers,
+};
