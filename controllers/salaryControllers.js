@@ -48,16 +48,28 @@ const createSalary = async (req, res) => {
 };
 
 const queriedSalaries = async (req, res) => {
-  const { age, gender, yearsOfEmployment } = req.params;
+  const {
+    age: ageParam,
+    gender,
+    yearsOfEmployment: yearsOfEmploymentParam,
+  } = req.params;
+
+  console.log(parseInt(ageParam) - 5);
+  console.log(parseInt(ageParam) + 5);
+  console.log(parseInt(yearsOfEmploymentParam) - 5);
+  console.log(parseInt(yearsOfEmploymentParam) + 5);
 
   try {
     const salaries = await Salary.find().where({
-      age: { $gte: age - 5, $lte: age + 5 },
+      $and: [
+        { age: { $lte: parseInt(ageParam) + 5 } },
+        { age: { $gte: parseInt(ageParam) - 5 } },
+      ],
       gender: gender,
-      yearsOfEmployment: {
-        $gte: yearsOfEmployment - 5,
-        $lte: yearsOfEmployment + 5,
-      },
+      $or: [
+        { yearsOfEmployment: { $lte: parseInt(ageParam) + 5 } },
+        { yearsOfEmployment: { $gte: parseInt(ageParam) - 5 } },
+      ],
     });
     res.status(200).json(salaries);
   } catch (error) {
